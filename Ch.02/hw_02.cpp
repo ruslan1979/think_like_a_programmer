@@ -17,7 +17,7 @@
 using namespace std;
 
 int main() {
-    for (int i = 1; i != 5; ++i) {
+    for (int i = 0; i != 5; ++i) {
         for (int j = 4 - i; j != -1; --j)
             cout << " ";
 
@@ -30,7 +30,7 @@ int main() {
         for (int j = 0; j != i; ++j)
             cout << " ";
 
-        for (int j = 0; j != 8 - 2 * i; ++j)
+        for (int j = 0; j != 10 - 2 * i; ++j)
               cout << "#";
         cout << endl;
     }
