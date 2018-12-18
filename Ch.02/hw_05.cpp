@@ -7,52 +7,32 @@
 */
 
 #include <iostream>
+#include <conio.h>
 
 using namespace std;
 
 int main() {
-    for (int i = 0; i != 11; ++i) {
-        if ((i == 0) || (i == 10)) {
-           for (int j = 0; j != 11; ++j)
-                cout << "#";
-        }
+    char digitChar;
+    int countNumber = 0, sum = 0;
 
-        else if ((i == 2) || (i == 8)) {
-           for (int j = 0; j != 11; ++j){
-                if ((j == 1) || (j == 9))               
-                    cout << " ";
-                else
-                    cout << "#";
-           }
-        }
+    cout << "Enter 12 digits: ";
+    do {
+        digitChar = getch();
+        cout << digitChar;
 
-        else if ((i == 3) || (i == 7))  {
-           for (int j = 0; j != 11; ++j){
-                if ((j == 0) || (j == 10) || (j == 2) || (j == 8))              
-                    cout << "#";
-                else
-                    cout << " ";
-           }
-		}
+        int number = (digitChar - '0');
+        if (countNumber % 2 == 0)
+            sum += (number * 1);
+        else if (countNumber % 2 != 0)
+            sum += (number * 3);
 
-        else if ((i > 3) && (i < 7))  {
-           for (int j = 0; j != 11; ++j){
-                if (j % 2 == 0)             
-                    cout << "#";
-                else
-                    cout << " ";
-           }
-		}
+        countNumber++;
+    } while (countNumber != 12);
 
-        else if ((i == 1) || (i == 9))  {
-           for (int j = 0; j != 11; ++j){
-                if ((j == 0) || (j == 10))             
-                    cout << "#";
-                else
-                    cout << " ";
-           }
-		}
-        
-        cout << endl;
-    }
+    // сгенерируем проверочную цифру
+    if (sum % 10 != 0)
+        cout << endl << "CheckNumber is " << (10 - (sum % 10)) << endl;
+     else
+        cout << endl << "CheckNumber is 0 " << endl;
+    return 0;
 }
