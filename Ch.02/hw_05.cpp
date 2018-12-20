@@ -7,32 +7,64 @@
 */
 
 #include <iostream>
-#include <conio.h>
 
 using namespace std;
 
 int main() {
-    char digitChar;
-    int countNumber = 0, sum = 0;
+    enum modeType {GENERATION, VERIFICATION};
+    modeType mode = GENERATION;
 
-    cout << "Enter 12 digits: ";
-    do {
-        digitChar = getch();
-        cout << digitChar;
+    cout << "Enter 12 or 13 digits: ";
 
+    char digitChar = cin.get();
+    int countNumber = 0, sum = 0, lastDigit = 0;
+
+
+    while (digitChar != 10) {
         int number = (digitChar - '0');
-        if (countNumber % 2 == 0)
-            sum += (number * 1);
-        else if (countNumber % 2 != 0)
-            sum += (number * 3);
+
+        // если введено больше 12 цифр - переключаем режим
+        if (countNumber >= 12) {
+            mode = VERIFICATION;
+            lastDigit = number;
+            cout << lastDigit << endl;
+        }
+        // если меньше - подсчитываем сумму произведений разрядов на 1 или 3
+        else {
+            if (countNumber % 2 == 0)
+                sum += (number * 1);
+            else if (countNumber % 2 != 0)
+                sum += (number * 3);
+        }
 
         countNumber++;
-    } while (countNumber != 12);
+        digitChar = cin.get();
+    } ;
 
-    // сгенерируем проверочную цифру
-    if (sum % 10 != 0)
-        cout << endl << "CheckNumber is " << (10 - (sum % 10)) << endl;
-     else
-        cout << endl << "CheckNumber is 0 " << endl;
+    // если ввели недостаточно данных, то выводим сообщение
+    if (countNumber < 12) {
+        cout << "Data is not enough";
+        return 0;
+    }
+
+    switch (mode) {
+        case GENERATION:
+            // сгенерируем проверочную цифру
+            if (sum % 10 != 0)
+                cout << "CheckNumber is " << (10 - (sum % 10)) << endl;
+            else
+                cout << "CheckNumber is 0 " << endl;
+            break;
+        case VERIFICATION:
+            // покажем реальную и ожидаемую проверочную цифру
+            if (sum % 10 != 0)
+                cout << "Expected CheckNumber is " << (10 - (sum % 10));
+            else
+                cout << "Expected CheckNumber is 0 ";
+
+            cout << ", Your checkout is  " << lastDigit;
+            break;
+    }
+
     return 0;
 }
