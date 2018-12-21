@@ -12,61 +12,41 @@
 
 using namespace std;
 
+string bin2dec(string input) {
+    for (auto s: input) {
+        int digit = stoi(s);
+
+
+    }
+}
+
 int main() {
-    char outputCharacter;
-    enum modeType {UPPERCASE, LOWERCASE, PUNCTUATION};
+    enum modeType {BIN2DEC, DEC2BIN};
+    modeType mode = BIN2DEC;
 
-    modeType mode = UPPERCASE;
-    char digitChar;
-    do {
-        digitChar = cin.get();
+    cout << "Enter digits: ";
+
+    char digitChar = cin.get();
+    string figure;
+
+    while (digitChar != 10) {
         int number = (digitChar - '0');
+
+        // если введено больше 12 цифр - переключаем режим
+        if (number > 1)
+            mode = DEC2BIN;
+
+        figure += digitChar;
         digitChar = cin.get();
-        while ((digitChar != 10) && (digitChar != ',')) {
-            number = number * 10 + (digitChar - '0');
-            digitChar = cin.get();
-        }
+    } ;
 
-        switch (mode) {
-            case UPPERCASE:
-                number = number % 27;
-                outputCharacter = number - 'A' - 1;
-                if (number == 0) {
-                    mode = LOWERCASE;
-                    continue;
-                }
-                break;
-            case LOWERCASE:
-                number = number % 27;
-                outputCharacter = number - 'a' - 1;
-                if (number == 0) {
-                    mode = PUNCTUATION;
-                    continue;
-                }
-                break;
-            case PUNCTUATION:
-                number = number % 9;
-                switch (number) {
-                    case 1: outputCharacter = '!'; break;
-                    case 2: outputCharacter = '?'; break;
-                    case 3: outputCharacter = ','; break;
-                    case 4: outputCharacter = '.'; break;
-                    case 5: outputCharacter = ' '; break;
-                    case 6: outputCharacter = ';'; break;
-                    case 7: outputCharacter = '"'; break;
-                    case 8: outputCharacter = '\''; break;
-                }
-                if (number == 0) {
-                    mode = UPPERCASE;
-                    continue;
-                }
-                break;
-        }
+    switch (mode) {
+        case BIN2DEC:
+            break;
+        case DEC2BIN:
+            break;
+    }
 
-        cout << outputCharacter;
-
-    } while (digitChar != 10);
-
-    cout << endl;
     return 0;
 }
+
