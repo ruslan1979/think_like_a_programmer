@@ -8,16 +8,36 @@
 */
 
 #include <iostream>
-#include <conio.h>
+#include <string>
+#include <cmath>
 
 using namespace std;
 
-string bin2dec(string input) {
-    for (auto s: input) {
-        int digit = stoi(s);
-
-
+long int dec2bin(long int input) {
+    string stroutput = "";
+    for(int i = 0; input != 0; ++i) {
+        //преобразовываем в строку - так легче вычислять
+        char charDigit = (input % 2) + '0';
+        stroutput = charDigit + stroutput;
+        input /= 2;
     }
+
+    long int output = stol(stroutput);
+    return output;
+}
+
+long int bin2dec(long int input) {
+    long int output = 0;
+    //максимальная степень
+    int power = 0;
+
+    while (input != 0) {
+        output += (input % 10) * pow(2, power);
+        power++;
+        input /= 10;
+    }
+
+    return output;
 }
 
 int main() {
@@ -27,25 +47,31 @@ int main() {
     cout << "Enter digits: ";
 
     char digitChar = cin.get();
-    string figure;
+    long int number = 0;
 
     while (digitChar != 10) {
-        int number = (digitChar - '0');
+        number = number * 10 + (digitChar - '0');
 
         // если введено больше 12 цифр - переключаем режим
-        if (number > 1)
+        if ((digitChar - '0') > 1)
             mode = DEC2BIN;
 
-        figure += digitChar;
         digitChar = cin.get();
     } ;
 
+    long int outputValue;
     switch (mode) {
         case BIN2DEC:
+            cout << endl << "Binary 2 decimal mode is switched on" << endl;
+            outputValue = bin2dec(number);
             break;
         case DEC2BIN:
+            cout << endl << "Decimal 2 binary mode is switched on" << endl;
+            outputValue = dec2bin(number);
             break;
     }
+
+    cout << outputValue << endl;
 
     return 0;
 }
