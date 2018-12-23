@@ -8,37 +8,9 @@
 */
 
 #include <iostream>
-#include <string>
-#include <cmath>
+#include <cstdlib>
 
 using namespace std;
-
-long int dec2bin(long int input) {
-    string stroutput = "";
-    for(int i = 0; input != 0; ++i) {
-        //преобразовываем в строку - так легче вычислять
-        char charDigit = (input % 2) + '0';
-        stroutput = charDigit + stroutput;
-        input /= 2;
-    }
-
-    long int output = stol(stroutput);
-    return output;
-}
-
-long int bin2dec(long int input) {
-    long int output = 0;
-    //максимальная степень
-    int power = 0;
-
-    while (input != 0) {
-        output += (input % 10) * pow(2, power);
-        power++;
-        input /= 10;
-    }
-
-    return output;
-}
 
 int main() {
     enum modeType {BIN2DEC, DEC2BIN};
@@ -47,31 +19,31 @@ int main() {
     cout << "Enter digits: ";
 
     char digitChar = cin.get();
-    long int number = 0;
+    string number = "";
 
     while (digitChar != 10) {
-        number = number * 10 + (digitChar - '0');
+        number += digitChar;
 
-        // если введено больше 12 цифр - переключаем режим
+        // если вводимая цифра больше 1 - переключаем режим
         if ((digitChar - '0') > 1)
             mode = DEC2BIN;
 
         digitChar = cin.get();
     } ;
 
-    long int outputValue;
+    
     switch (mode) {
         case BIN2DEC:
             cout << endl << "Binary 2 decimal mode is switched on" << endl;
-            outputValue = bin2dec(number);
+            cout << stoi(number, nullptr, 2) << endl;            
             break;
         case DEC2BIN:
             cout << endl << "Decimal 2 binary mode is switched on" << endl;
-            outputValue = dec2bin(number);
+            char buf[100];
+            itoa(stoi(number), buf, 2);
+            cout << buf << endl;
             break;
-    }
-
-    cout << outputValue << endl;
+    }    
 
     return 0;
 }
