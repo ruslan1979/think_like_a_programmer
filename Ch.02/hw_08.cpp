@@ -12,66 +12,25 @@
 using namespace std;
 
 int main() {
-    enum modeType {BIN, DEC, HEX};
-    modeType mode;
-
-    cout << "Which enter mode do you prefer? Choose 1. Binary 2. Decimal 3. Hexadecimal" ;
-    int inputMode;
-    cin >> inputMode;
-
-    string number;
-    cout << "Enter your number ";
-    cin >> number;
     
-    //зададим режим
-    switch (inputMode) {
-        case 1:
-            mode = BIN;
-            break;
-        case 2:
-            mode = DEC;
-            break;
-       case 3:
-            mode = HEX;
-        
-    }
+    cout << "Enter initial basis:" ;
+    int initBasis;
+    cin >> initBasis;
+
+    cout << "Enter end basis:" ;
+    int endBasis;
+    cin >> endBasis;
+
+    cout << "Enter number:" ;
+    string strNumber;
+    cin >> strNumber;
    
     char buf[100];
-    int outInt;
-    switch (mode) {
-        case BIN:
-            // надо вывести в 10чном и 16ричном виде            
-            //конвертируем в 10ричный и выводим
-            outInt = stoi(number, nullptr , 2);                        
-            cout << outInt << endl;            
-            
-            // конвертируем в 16ричный и выводим
-            itoa(outInt, buf, 16);
-            cout << buf << endl;            
-            break;
-        case DEC:
-            // надо вывести в 2чном и 16ричном
-            //выводим в 2чном
-            itoa(stoi(number), buf, 2);
-            cout << buf << endl;            
-            
-            //выводим в 16ричном
-            itoa(stoi(number), buf, 16);
-            cout << buf << endl;            
-        	
-            break;
-        case HEX:
-            // надо вывести в 10ричном и 2чном
-            //конвертируем в 10ричный и выводим
-            outInt = stoi(number, nullptr , 16);                        
-            cout << outInt << endl;            
-
-            // конвертируем в 2чный и выводим
-            itoa(outInt, buf, 2);
-            cout << buf << endl;            
-            break;
-    }    
-
+    int outInt = stoi(strNumber, nullptr , initBasis);
+    
+    itoa(outInt, buf, endBasis);
+    cout << "Output: " << buf << endl;            
+    
     return 0;
 }
 
