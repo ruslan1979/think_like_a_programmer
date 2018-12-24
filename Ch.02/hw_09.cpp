@@ -11,24 +11,21 @@ using namespace std;
 
 int main() {
     
-    cout << "Enter initial basis:" ;
-    int initBasis;
-    cin >> initBasis;
+    char inputChar = cin.get();
 
-    cout << "Enter end basis:" ;
-    int endBasis;
-    cin >> endBasis;
-
-    cout << "Enter number:" ;
-    string strNumber;
-    cin >> strNumber;
-   
-    char buf[100];
-    int outInt = stoi(strNumber, nullptr , initBasis);
+    int coutWords = 0, // количество слов
+    maxLengthWord = 0, // длина самого длинного слова
+    maxCountVowels = 0, // наибольшее количество гласных
+    minLengthWord = 1, // длина самого короткого слова
+    minCountConsonants = 1; // наименьшее количество согласных букв
+    ;
+    while (inputChar != 10) {
+        if (inputChar == ' ')
+            countWords++;
+    }
     
-    itoa(outInt, buf, endBasis);
-    cout << "Output: " << buf << endl;            
-    
+    // выводим статистику
+    cout << endl;
     return 0;
 }
 
