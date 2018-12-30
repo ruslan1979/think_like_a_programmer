@@ -1,9 +1,4 @@
-/* Задача: нахождение моды
-В статистике мода набора значений представляет собой самое часто встречающееся
-значение. Напишите код, который обрабатывает массив данных опроса, в ходе которого 
-респонденты отвечали на вопрос с помощью цифры от 1 до 10, чтобы определить
-моду набора данных. Для нашей цели можно выбрать любую моду, если их окажется
-несколько.
+/* Измененный последний пример из предыдущей главы.
 */
 #include <iostream>
 
@@ -11,13 +6,63 @@ using namespace std;
 
 
 int main() {
-    const char punctuation = {'!', '?', ',', '.', ' ', ';', '"', '\''};
-    const int ARRAY_SIZE = 8;
-    int targetPos = 0;
-    while (punctuation[targetPos] != targetValue & targetPos < ARRAYS_SIZE)
-        targetPos++;
+    char outputCharacter;
+    enum modeType {UPPERCASE, LOWERCASE, PUNCTUATION};
+
+    modeType mode = UPPERCASE;
+    char digitChar;
+        
+    do {
+        digitChar = cin.get();
+        int number = (digitChar - '0');
+        digitChar = cin.get();
+        while ((digitChar != 10) && (digitChar != ',')) {
+            number = number * 10 + (digitChar - '0');
+            digitChar = cin.get();
+        }
+
+        switch (mode) {
+            case UPPERCASE:
+                number = number % 27;
+                outputCharacter = number - 'A' - 1;
+                if (number == 0) {
+                    mode = LOWERCASE;
+                    continue;
+                }
+                break;
+            case LOWERCASE:
+                number = number % 27;
+                outputCharacter = number - 'a' - 1;
+                if (number == 0) {
+                    mode = PUNCTUATION;
+                    continue;
+                }
+                break;
+            case PUNCTUATION:
+                number = number % 9;
+				const char punctuation[8] = {'!', '?', ',', '.', ' ', ';', '"', '\''};                
     
-    int punctuationCode = targetPos + 1;
+                outputCharacter = punctuation[number - 1];                
+
+                if (number == 0) {
+                    mode = UPPERCASE;
+                    continue;
+                }
+                break;
+        }
+
+        cout << outputCharacter;
+
+    } while (digitChar != 10);
+
+    cout << endl;
+    
+    //const int ARRAY_SIZE = 8;
+    //int targetPos = 0;
+    //while (punctuation[targetPos] != targetValue & targetPos < ARRAYS_SIZE)
+    //    targetPos++;
+    //
+    //int punctuationCode = targetPos + 1;
     
     return 0;
 }
