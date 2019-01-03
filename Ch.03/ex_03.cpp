@@ -9,6 +9,7 @@
 */
 #include <iostream>
 #include <string>
+#include <ctime>
 
 using namespace std;
 
@@ -20,12 +21,11 @@ int main() {
     modeType mode = UPPERCASE; // по умолчанию зашивровывается по алгоритму для заглавных букв
     char inputChar = cin.get();
 
-
     int countChar = 0;
     while (inputChar - 0 != 10) {
     	//cout << "Salam: " << inputChar << inputChar - 0	 << endl;
         int digit = inputChar;
-
+		srand(time(0));
         if (inputChar >= 'a' && inputChar <= 'z') {
             //LOWERCASE
             if (mode != LOWERCASE) {
@@ -49,10 +49,18 @@ int main() {
         }
 
         else {
+            // флаг-переход к знакам препинания не должен быть краток 27, но должен быть краток 9
+            // генерируемое число не дожно быть кратным 3, т.к. будет умножаться на 9
+            int rand_num = 0;
+            do {
+				rand_num = rand() % 1000 + 1;
+			}
+            while (rand_num % 3 != 0);
+
             //PUNCTUATIN
             if (mode != PUNCTUATION){
                 mode = PUNCTUATION;
-                cout << ',' << to_string((rand() % 1000) * 9);
+                cout << ',' << to_string(rand_num * 9);
             }
 
             const int ARRAY_SIZE = 8;
@@ -64,7 +72,7 @@ int main() {
 
             int punctuationCode = targetPos + 1;
 
-            outputString = ((countChar == 0)? "" : ",") + to_string(punctuationCode + (rand() % 1000 + 1) * 9);
+            outputString = ((countChar == 0)? "" : ",") + to_string(punctuationCode + rand_num * 9);
         }
 
         countChar++;
