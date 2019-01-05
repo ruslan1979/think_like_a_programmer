@@ -34,5 +34,6 @@ int main() {
     }
     
     cout << "Highest monthly average sales: " << highestAverage << endl;
-
+    
+    return 0;
 }
