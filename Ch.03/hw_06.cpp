@@ -11,40 +11,27 @@
 */
 
 #include <iostream>
+#include <time>
 #define CHARS_COUNT 26
 
 using namespace std;
 
-int findElement(char input, const char TEMPLATE[]) {
-    // а если это последний элемент массива
-    if (input = TEMPLATE[CHARS_COUNT - 1])
-        return CHARS_COUNT - 1;
-    
-    for (int i = 0; ; ++i) {
-        if (input == TEMPLATE[i])
-            return i;
-    }
-}
-
 int main() {
-    const char ALPHABET[] = {
-                             'Q', 'W', 'E', 'R',
-                             'N', 'T', 'Y', 'U',
-                             'B', 'I', 'O', 'P',
-                             'V', 'A', 'S', 'D',
-                             'C', 'F', 'G', 'H',
-                             'M', 'J', 'K', 'L',
-                             'Z', 'X'
-                            };
-
     string phrase;
     cout << "ENTER A PHRASE BY CAPITAL LETTERS : ";
     getline(cin, phrase);
 
+    // генерация массива случайных чисел от 0 до 25
+    srand(time(nullptr));
+    int numbers[] = new int[CHARS_COUNT];
+        
+    for (int i = 0; i != CHARS_COUNT; ++i) {
+        numbers[i] = rand() % CHARS_COUNT;
+    }
+    
     for (auto ch : phrase) {
         if ((ch >= 'A') && (ch <= 'Z')) {
             // номер позиции в массиве
-            int numPos = findElement(ch, ALPHABET);
             char elem = numPos + 'A';
             cout << elem;
         }
