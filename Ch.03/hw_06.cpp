@@ -11,10 +11,30 @@
 */
 
 #include <iostream>
-#include <time>
+#include <ctime>
 #define CHARS_COUNT 26
 
 using namespace std;
+
+// генератор значений в массиве
+int* generateNumbers(const int COUNT){
+    int* numbers = new int[COUNT];
+    for (int i = 0; i != COUNT; ++i)
+        numbers[i] = rand() % COUNT;
+    
+    return numbers;
+}
+
+// определение равно ли значение элемента массива своему порядковому номеру в массиве
+bool isEqualed(int array[], const int COUNT) {
+    for (int i = 0; i != COUNT; ++i) {
+        if (array[i] == i)
+            return true;
+    }
+    
+    return false;
+}
+
 
 int main() {
     string phrase;
@@ -23,21 +43,28 @@ int main() {
 
     // генерация массива случайных чисел от 0 до 25
     srand(time(nullptr));
-    int numbers[] = new int[CHARS_COUNT];
+    int * numbers = new int[CHARS_COUNT];
         
-    for (int i = 0; i != CHARS_COUNT; ++i) {
-        numbers[i] = rand() % CHARS_COUNT;
+    bool isTheSame = true;    
+    // генерируем массив и проверяем - совпадают ли значения с порядковым номером массива
+    while (isTheSame == true) {
+        numbers = generateNumbers(CHARS_COUNT);
+        isTheSame = isEqualed(numbers, CHARS_COUNT);
     }
     
     for (auto ch : phrase) {
         if ((ch >= 'A') && (ch <= 'Z')) {
             // номер позиции в массиве
-            char elem = numPos + 'A';
+            int pos_elem = ch - 'A';
+            char elem = numbers[pos_elem] + 'A';
             cout << elem;
         }
         else
             cout << ch;
     }
+    
+    delete[] numbers;
+    numbers = nullptr;
 
     return 0;
 }
