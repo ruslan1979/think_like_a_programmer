@@ -7,6 +7,7 @@
     квартиль: определение из википедии https://en.wikipedia.org/wiki/Quartile
     технология расчета: https://stackoverflow.com/questions/43792127/compute-the-quartiles-of-a-given-list-of-numbers
     пример: https://github.com/nextgis/nextgisqgis/blob/eeb0861312272aee99bba8ed91103c5c1cb3e7de/src/core/qgsstatisticalsummary.cpp (искать  mFirstQuartile )
+    пример решения: https://stackoverflow.com/questions/10769743/determine-the-third-quartile-from-a-collection-of-integers-in-c/10770112#10770112
 */
 
 using namespace std;
