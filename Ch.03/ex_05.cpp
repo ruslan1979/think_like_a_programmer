@@ -37,4 +37,5 @@ int main() {
     cout << "Name: " << studentArray[highPosition].name << endl;
     cout << "Grade: " << studentArray[highPosition].grade << endl;
 
+    return 0;
 }
