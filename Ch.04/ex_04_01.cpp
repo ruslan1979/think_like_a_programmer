@@ -12,14 +12,44 @@
 
 using namespace std;
 
-int count = 0;
-void stackOverflow() {
-    cout << "Current value is " << count << endl;
-    count++;
-    stackOverflow();
+typedef char * arrayString;
+
+char characterAt(arrayString s, int position) {
+	return s[position];
+}
+
+void append(arrayString& s, char c) {
+	int oldLength = 0;
+	while (s[oldLength] != 0) {
+		oldLength++;
+	}
+	
+	arrayString newS = new char[oldLength + 2];
+	for (int i = 0; i != oldLength; ++i) {
+		newS[i] = s[i];
+	}
+	
+	newS[oldLength] = c;
+	newS[oldLength + 1] = 0;
+	delete[] s;
+	s = newS;
+}
+
+void appendTester1() {
+	arrayString a = new char[5];
+	a[0] = 't'; a[1] = 'e'; a[2] = 's'; a[3] = 't'; a[4] = 0;
+	append(a, '!');
+	cout << a << "\n";	
+}
+
+void appendTester2() {
+	arrayString a = new char[1];
+	a[0] = 0;
+	append(a, '!');
+	cout << a << "\n";	
 }
 
 int main() {
-    stackOverflow();
-    return 0;
+	appendTester1();
+	return 0;
 }
