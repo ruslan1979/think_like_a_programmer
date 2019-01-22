@@ -40,7 +40,9 @@ int compareId(const void * A, const void * B) {
 int main() {
     //const int ARRAY_SIZE = 10;
 
-    student studentArray[] = {
+    student * studentArray[] = new student[];
+    student
+    {
         {87, 10001, "Fred"},
         {28, 10002, "Tom"},
         {100, 10003, "Alistair"},
