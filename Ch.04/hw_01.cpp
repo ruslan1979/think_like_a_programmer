@@ -74,5 +74,7 @@ int main() {
     	cout << "Grade: " << studentArray[i].grade << endl;
 	}
 
+    delete[] studentArray;
+    
     return 0;
 }

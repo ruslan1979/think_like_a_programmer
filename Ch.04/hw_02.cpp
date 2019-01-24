@@ -11,66 +11,96 @@
     ляла собой abcdefg, позиция была 3, а длина 4, то новая строка
     будет содержать cdef.
 */
-#include <iostream>
 
-# define ARRAY_SIZE 10
+#include <iostream>
 
 using namespace std;
 
-struct student {
-    int grade;
-    int studentID;
-    string name;
-};
+typedef char * arrayString;
 
-int compareGrade(const void * A, const void * B) {
-        student * stdA = (student *)(A);
-        student * stdB = (student *)(B);
-        return stdA->grade - stdB->grade;
+arrayString substring(arrayString& s, int pos, int length) {
+    arrayString out = new char[length];
+    for (int i = 0; i != length; ++i) {
+        out[i] = s[i + pos - 1];
+    }
+    
+    return out;
 }
 
-int compareId(const void * A, const void * B) {
-        student * stdA = (student *)(A);
-        student * stdB = (student *)(B);
-        return stdA->studentID - stdB->studentID;
+char characterAt(arrayString s, int position) {
+	return s[position];
+}
+
+int length(arrayString s){
+	int count = 0;
+	while (s[count] != 0)
+		count++;
+	
+	return count;
+}
+
+
+void append(arrayString& s, char c) {
+	int oldLength = length(s);
+	
+	arrayString newS = new char[oldLength + 2];
+	for (int i = 0; i != oldLength; ++i) {
+		newS[i] = s[i];
+	}
+	
+	newS[oldLength] = c;
+	newS[oldLength + 1] = 0;
+	delete[] s;
+	s = newS;
+}
+
+void concatenate(arrayString &s1, arrayString &s2) {
+	int s1_oldLength = length(s1);
+    int s2_Length = length(s2);
+    int s1_NewLength = s1_oldLength + s2_Length;    
+    arrayString newS = new char[s1_NewLength + 1];
+    	
+	for (int i = 0; i != s1_oldLength; ++i) {
+		newS[i] = s1[i];
+	}
+    
+	for (int i = 0; i != s2_Length; ++i) {
+		newS[i + s1_oldLength] = s2[i];
+	}
+    	
+	newS[s1_NewLength] = 0;
+	delete[] s1;
+	s1 = newS;    
+}
+
+void concatenateTester1() {
+    arrayString a = new char[5];
+    a[0] = 't'; a[1] = 'e'; a[2] = 's'; a[3] = 't'; a[4] = 0;
+    arrayString b = new char[4];
+    b[0] = 'b'; b[1] = 'e'; b[2] = 's'; b[3] = 0;
+    concatenate(a, b);
+    
+    cout << a << "\n" << endl;
+}
+
+void concatenateTester2() {
+    arrayString a = new char[5];
+    a[0] = 't'; a[1] = 'e'; a[2] = 's'; a[3] = 't'; a[4] = 0;
+    arrayString b = new char[1];
+    b[0] = 0;
+    concatenate(b, a);
+    
+    cout << a << "\n" << b << endl;
+    
+    cout << (void *)a << "\n" << (void *)b << endl;
+}
+
+void substringTester() {
+    arrayString s = "Test123";
+    cout << substring(s, 1, 4) << endl;
 }
 
 int main() {
-
-    //недостаток - захардкожены значения элементов массива
-    student * studentArray = new student[ARRAY_SIZE]
-    {
-        {87, 10001, "Fred"},
-        {28, 10002, "Tom"},
-        {100, 10003, "Alistair"},
-        {78, 10004, "Sasha"},
-        {84, 10005, "Erin"},
-        {98, 10006, "Belinda"},
-        {75, 10007, "Leslie"},
-        {70, 10008, "Candy"},
-        {81, 10009, "Aretha"},
-        {68, 10010, "Veronica"}
-    };
-
-
-    // сортировка по оценкам
-    cout << "==Sort by grades " << endl;
-    qsort(studentArray, ARRAY_SIZE, sizeof(student), compareGrade);
-
-	for (int i = 0; i != ARRAY_SIZE; ++i ){
-    	cout << "Name: " << studentArray[i].name << endl;
-    	cout << "Grade: " << studentArray[i].grade << endl;
-	}
-
-    // сортировка по studentId
-    cout << "===Sort by student IDs " << endl;
-    qsort(studentArray, ARRAY_SIZE, sizeof(student), compareId);
-
-	for (int i = 0; i != ARRAY_SIZE; ++i){
-    	cout << "Name: " << studentArray[i].name << endl;
-    	cout << "Student id: " << studentArray[i].studentID << endl;
-    	cout << "Grade: " << studentArray[i].grade << endl;
-	}
-
-    return 0;
+	substringTester();    
+	return 0;
 }
