@@ -42,8 +42,26 @@ arrayString substring(arrayString& s, int pos, int len) {
     return out;
 }
 
+// hw03 is started
 void replaceString(arrayString& source, arrayString& target, arrayString& replaceText) {
-    
+        int targetLength = length(target);
+        int sourceLength = length(source);
+        
+        bool isReplaced = false;
+        for (int i = 0; i != (sourceLength - targetLength); ++i) {
+            // 
+            
+            for (int j = 0; j != targetLength; j++) {
+                if (source[i + j] != target[j]) {
+                    isReplaced = false;
+                    break;
+                }
+                
+                isReplaced = true;
+            }
+            
+            
+        }
 }
 
 void append(arrayString& s, char c) {
