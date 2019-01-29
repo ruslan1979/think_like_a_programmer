@@ -44,8 +44,9 @@ arrayString substring(arrayString& s, int pos, int len) {
 }
 
 // hw03 is started
-void replaceString(arrayString& source, arrayString& target, arrayString& replaceText) {
+void replaceString(arrayString& source, const arrayString& target, const arrayString& replaceText) {
     int sourceLength = length(source);
+    cout << "Source: " << source << "  sourceLength: " << sourceLength << endl;
 
     int targetLength = length(target);
     cout << "Target: " << target << "  targetLength: " << targetLength << endl;
@@ -71,11 +72,12 @@ void replaceString(arrayString& source, arrayString& target, arrayString& replac
     if (countReplace == 0)
         return;
 
-    // длина итоговой выходной строки
-    int resultLength = countReplace * (targetLength - sourceLength) + sourceLength + 1; // 1 - место для нулевого символа
+	// длина итоговой выходной строки
+    int resultLength = countReplace * (replaceLength - targetLength) + sourceLength + 1; // 1 - место для нулевого символа
+    cout << "resultLength: " << resultLength << endl;
     arrayString result = new char[resultLength];
 
-    for (int i = 0, repl_it = 0; i != sourceLength - (targetLength - 1); ++i) {
+    for (int i = 0, repl_it = 0; i < (sourceLength - (targetLength - 1)); ) {
         bool isReplaced = true;
         // есть ли шаблон текста, который надо менять
         for (int j = 0; j != targetLength; ++j)
@@ -84,16 +86,28 @@ void replaceString(arrayString& source, arrayString& target, arrayString& replac
                 break;
             }
 
-        if (!isReplaced)
+        // ничего нет на замену
+        if (!isReplaced) {
+            result[repl_it] = source[i];
+            cout << "is not replaced: " << i << endl;        
+            i++;            
+            repl_it++;    		
             continue;
-
-        for (int j = 0; j != targetLength; ++j) {
-
         }
 
-
+        for (int j = 0; j != replaceLength; ++j) {
+            result[repl_it + j] = replaceText[j];
+        }
+        
+        cout << "is replaced: " << i << endl;
+        i += targetLength;
+        repl_it += replaceLength;
+        cout << "Result " << result << endl;        
     }
 
+    cout << "End!" << endl;
+    
+    result[resultLength-1] = 0;
     source = result;
 
     delete[] result;
