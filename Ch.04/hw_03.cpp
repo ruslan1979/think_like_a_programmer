@@ -45,28 +45,53 @@ arrayString substring(arrayString& s, int pos, int len) {
 
 // hw03 is started
 void replaceString(arrayString& source, arrayString& target, arrayString& replaceText) {
-    int targetLength = length(target);
-    cout << "targetText : " << target << endl;
-    cout << "targetLength : " << targetLength;
     int sourceLength = length(source);
 
-    arrayString result = new char[sourceLength];
+    int targetLength = length(target);
+    cout << "Target: " << target << "  targetLength: " << targetLength << endl;
 
-    for (int i = 0; i != sourceLength - (targetLength - 1); ++i) {
+    int replaceLength = length(replaceText);
+    cout << "Replace: " << replaceText << "   replaceLength: " << replaceLength << endl;
+
+    int countReplace = 0; // сколько раз будет замена
+    for (int i = 0, repl_it = 0; i != sourceLength - (targetLength - 1); ++i) {
+
         bool isReplaced = true;
         // есть ли шаблон текста, который надо менять
         for (int j = 0; j != targetLength; ++j)
-            if ((source[i + j] != target[j]) && (target[j] != 0))
+            if (source[i + j] != target[j]) {
                 isReplaced = false;
+                break;
+            }
 
-        // такой шаблон найден
-        if (isReplaced){
-            for (int j = 0; j != targetLength; ++j)
-                result[i + j] = replaceText[j];
+        countReplace += (isReplaced) ? 1 : 0;
+    }
+
+    // если нет шаблона для поиска - просто прекращаем работу
+    if (countReplace == 0)
+        return;
+
+    // длина итоговой выходной строки
+    int resultLength = countReplace * (targetLength - sourceLength) + sourceLength + 1; // 1 - место для нулевого символа
+    arrayString result = new char[resultLength];
+
+    for (int i = 0, repl_it = 0; i != sourceLength - (targetLength - 1); ++i) {
+        bool isReplaced = true;
+        // есть ли шаблон текста, который надо менять
+        for (int j = 0; j != targetLength; ++j)
+            if (source[i + j] != target[j]) {
+                isReplaced = false;
+                break;
+            }
+
+        if (!isReplaced)
+            continue;
+
+        for (int j = 0; j != targetLength; ++j) {
+
         }
-        //если такого шаблона нет
-        else
-            result[i] = source[i];
+
+
     }
 
     source = result;
@@ -75,25 +100,22 @@ void replaceString(arrayString& source, arrayString& target, arrayString& replac
 }
 
 // -----------------------------   TESTS begin -----------------------------------------------
-// replaceText - 1 символа (1 - буква)
-// target - 1 символа (1 - буква)
+// replaceText - 2 символа (1 - буква, 1 - нулевой символ)
+// target - 2 символа (1 - буква, 1 - нулевой символ)
 void replaceStringTest1() {
     arrayString test = new char[11];
     test[0] = 'H'; test[1] = 'e'; test[2] = 'l'; test[3] = 'l'; test[4] = 'o'; test[5]='W'; test[6] = 'o'; test[7] = 'r'; test[8] = 'l'; test[9] = 'd'; test[10] = 0;
 
-    arrayString targ = new char[1]; targ[0] = 'l';
+    cout << "The source text: " << test << endl;
+    arrayString targ = new char[2]; targ[0] = 'l'; targ[1] = 0;
 
-    arrayString replaceText = new char[1]; replaceText[0] = 'z';
+    arrayString replaceText = new char[2]; replaceText[0] = 'z'; replaceText[1] = 0;
 
     replaceString(test, targ, replaceText);
 
-    arrayString res = new char[11];
-    res[0] = 'H'; res[1] = 'e'; res[2] = 'z'; res[3] = 'z'; res[4] = 'o'; res[5]='W'; res[6] = 'o'; res[7] = 'r'; res[8] = 'z'; res[9] = 'd'; res[10] = 0;
-
-    assert(res == test);
+    cout << "The changed text: " << test << endl;
 
     delete[] test;
-    delete[] res;
 }
 
 // replaceText - 3 символа (2 - буква, 1 - нулевой)
@@ -102,40 +124,34 @@ void replaceStringTest2() {
     arrayString test = new char[11];
     test[0] = 'H'; test[1] = 'e'; test[2] = 'l'; test[3] = 'l'; test[4] = 'o'; test[5]='W'; test[6] = 'o'; test[7] = 'r'; test[8] = 'l'; test[9] = 'd'; test[10] = 0;
 
+    cout << "The source text: " << test << endl;
     arrayString targ = new char[3]; targ[0] = 'l'; targ[1] = 'd'; targ[2] = 0;
 
-    arrayString replaceText = new char[3]; replaceText[0] = 'z'; replaceText[1] = 'k'; replaceText[3] = 0;
+    arrayString replaceText = new char[3]; replaceText[0] = 'z'; replaceText[1] = 'k'; replaceText[2] = 0;
 
     replaceString(test, targ, replaceText);
 
-    arrayString res = new char[11];
-    res[0] = 'H'; res[1] = 'e'; res[2] = 'z'; res[3] = 'z'; res[4] = 'o'; res[5]='W'; res[6] = 'o'; res[7] = 'r'; res[8] = 'z'; res[9] = 'k'; res[10] = 0;
-
-    assert(res == test);
+    cout << "The changed text: " << test << endl;
 
     delete[] test;
-    delete[] res;
 }
 
 // replaceText - 3 символа (2 - буква, 1 - нулевой)
-// target - 3 символа (2 - буква, 1 - нулевой)
+// target - 2 символа (2 - буква, 1 - нулевой)
 void replaceStringTest3() {
     arrayString test = new char[11];
     test[0] = 'H'; test[1] = 'e'; test[2] = 'l'; test[3] = 'l'; test[4] = 'o'; test[5]='W'; test[6] = 'o'; test[7] = 'r'; test[8] = 'l'; test[9] = 'd'; test[10] = 0;
 
-    arrayString targ = new char[1]; targ[0] = 'l';
+    cout << "The source text: " << test << endl;
+    arrayString targ = new char[3]; targ[0] = 'l'; targ[1] = 'l'; targ[2] = 0;
 
-    arrayString replaceText = new char[1]; replaceText[0] = 'z';
+    arrayString replaceText = new char[2]; replaceText[0] = 'z'; replaceText[1] = 0;
 
     replaceString(test, targ, replaceText);
 
-    arrayString res = new char[11];
-    res[0] = 'H'; res[1] = 'e'; res[2] = 'z'; res[3] = 'z'; res[4] = 'o'; res[5]='W'; res[6] = 'o'; res[7] = 'r'; res[8] = 'z'; res[9] = 'd'; res[10] = 0;
-
-    assert(res == test);
+    cout << "The changed text: " << test << endl;
 
     delete[] test;
-    delete[] res;
 }
 
 // -----------------------------   TESTS end -----------------------------------------------
@@ -220,6 +236,6 @@ void substringTester2() {
 
 
 int main() {
-	replaceStringTest1();
+	replaceStringTest2();
 	return 0;
 }
