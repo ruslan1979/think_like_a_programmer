@@ -32,10 +32,8 @@ void removeRecord(studentCollection &sc, int stuNum) {
 
     listNode * loopPtr = sc;
     listNode * prevPos = sc;
-
-    while (loopPtr != NULL && loopPtr->studentNum != stuNum) {
+    while (loopPtr != NULL) {
             prevPos = loopPtr;
-
             loopPtr = loopPtr->next;
     }
 
@@ -72,7 +70,7 @@ int main() {
     node2->studentNum = 1012; node2->grade = 144;
 
     listNode * node3 = new listNode;
-    node2->studentNum = 1076; node3->grade = 85;
+    node3->studentNum = 1076; node3->grade = 85;
 
     sc = node1;
     node1->next = node2;
@@ -82,10 +80,12 @@ int main() {
     node1 = node2 = node3 = NULL;
 
     //добавляем студента
-    //addRecord(sc, 1274, 91);
+    addRecord(sc, 1274, 91);
 
     int avg = averageRecord(sc);
     cout << "Average before removal: " << avg << endl;
+
+    listNode * pm = sc;
 
     // удалим студента
     removeRecord(sc, 1012);
