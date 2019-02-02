@@ -97,10 +97,7 @@ void replaceString(arrayString& source, const arrayString& target, const arraySt
     }
 
     result[resultLength-1] = 0;
-    for (int i = 0; i != resultLength; ++i)
-        source[i] = result[i];
-
-    delete[] result;
+    source = result;
 }
 
 // -----------------------------   TESTS begin -----------------------------------------------
@@ -139,6 +136,8 @@ void replaceStringTest2() {
     cout << "After replacement: " << test << endl;
 
     delete[] test;
+    delete[] targ;
+    delete[] replaceText;
 }
 
 // replaceText - 3 символа (2 - буква, 1 - нулевой)
@@ -157,6 +156,8 @@ void replaceStringTest3() {
     cout << "After replacement: " << test << endl;
 
     delete[] test;
+    delete[] targ;
+    delete[] replaceText;
 }
 
 // replaceText - 2 символа (1 - буква, 1 - нулевой)
@@ -174,6 +175,8 @@ void replaceStringTest4() {
     cout << "After replacement: " << test << endl;
 
     delete[] test;
+    delete[] targ;
+    delete[] replaceText;
 }
 
 // -----------------------------   TESTS end -----------------------------------------------

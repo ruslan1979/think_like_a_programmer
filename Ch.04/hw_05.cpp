@@ -46,14 +46,9 @@ void removeRecord(studentCollection &sc, int stuNum) {
 
     prevPos->next = loopPtr->next;
     
-    //копируем элементы в исходный список
-    while (prevPos != NULL) {
-    	sc = prevPos;
-    	prevPos = prevPos->next;
-	}
-
-    delete loopPtr;
-    delete prevPos;
+    sc = prevPos;
+    
+    delete loopPtr;    
 }
 
 double averageRecord(studentCollection sc) {
@@ -105,5 +100,7 @@ int main() {
     avg = averageRecord(sc);
     cout << "Average after removal: " << avg << endl;
 
+	delete[] sc;
+	
 	return 0;
 }
