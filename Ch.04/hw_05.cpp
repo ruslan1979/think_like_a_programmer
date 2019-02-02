@@ -30,15 +30,27 @@ void removeRecord(studentCollection &sc, int stuNum) {
     if (sc == NULL)
         return;
 
+    // если удаляем головной элемент
+    if (sc->studentNum == stuNum) {
+    	sc = sc->next;    	
+    	return;
+	}
+
     listNode * loopPtr = sc;
     listNode * prevPos = sc;
-    while (loopPtr != NULL) {
+    
+    while (loopPtr != NULL && loopPtr->studentNum != stuNum) {
             prevPos = loopPtr;
             loopPtr = loopPtr->next;
     }
 
     prevPos->next = loopPtr->next;
-    sc = prevPos;
+    
+    //копируем элементы в исходный список
+    while (prevPos != NULL) {
+    	sc = prevPos;
+    	prevPos = prevPos->next;
+	}
 
     delete loopPtr;
     delete prevPos;
@@ -80,7 +92,7 @@ int main() {
     node1 = node2 = node3 = NULL;
 
     //добавляем студента
-    addRecord(sc, 1274, 91);
+    addRecord(sc, 1000, 91);
 
     int avg = averageRecord(sc);
     cout << "Average before removal: " << avg << endl;
@@ -88,7 +100,7 @@ int main() {
     listNode * pm = sc;
 
     // удалим студента
-    removeRecord(sc, 1012);
+    removeRecord(sc, 1000);
 
     avg = averageRecord(sc);
     cout << "Average after removal: " << avg << endl;
