@@ -149,8 +149,8 @@ void concatenate(arrayString& s1, arrayString& s2) {
     stringListNode * node2 = s2;
 
     while (node1->next != NULL) {
-		node1 = node1->next;
-	}
+        node1 = node1->next;
+    };
 
     while (node2 != NULL) {
         node1->next = node2;
@@ -158,7 +158,6 @@ void concatenate(arrayString& s1, arrayString& s2) {
         node2 = node2->next;
         node1 = node1->next;
     }
-
 }
 
 // ---------------------- tests concatenate begin ------------
@@ -196,8 +195,11 @@ void concatenateTest1() {
 void concatenateTest2() {
     stringListNode * sLN0 = new stringListNode;
 
+    sLN0->elem = 0;
+    sLN0->next = NULL;
 	arrayString as1 = sLN0;
 
+	sLN0 = NULL;
 	//sLN0 = sLN1 = sLN2 = NULL;
 
     stringListNode * sLN5 = new stringListNode; sLN5->elem = 'd';
@@ -223,6 +225,6 @@ void concatenateTest2() {
 // ---------------------- tests concatenate end ------------
 
 int main() {
-	concatenateTest1();
+	concatenateTest2();
 	return 0;
 }
