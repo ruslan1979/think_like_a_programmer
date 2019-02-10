@@ -230,6 +230,18 @@ void concatenateTest2() {
 
 // ---------------------- tests concatenate end ------------
 
+void removeChars(arrayString& s, int pos, int length) {
+	stringListNode * sLN = s;
+	
+	for (int i = 0; i != pos; ++i)
+		sLN = sLN->next;
+	
+	for (int i = 0; i != length; ++i) {
+		sLN 
+	}
+}
+
+
 int main() {
 	concatenateTest2();
 	return 0;
