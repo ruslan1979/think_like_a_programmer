@@ -232,18 +232,36 @@ void concatenateTest2() {
 
 void removeChars(arrayString& s, int pos, int length) {
 	stringListNode * sLN = s;
-
-	for (int i = 0; i != pos; ++i)
-		sLN = sLN->next;
-
-	stringListNode * removed = sLN;
-	for (int i = 0; i != length; ++i) {
-		removed = removed->next;
+	stringListNode * temp = NULL;
+	
+	if (pos == 0){		
+				
+		for (int i = 0; i != length; ++i){
+			temp = sLN;
+			sLN = sLN->next;
+			delete temp;	
+		}		
+					
+		s = sLN;
+		
+		return;
 	}
+	//tail
+	else {
+		for (int i = 0; i != pos - 1; ++i){
+			sLN = sLN->next;
+		}
+		
+		// need to delete a few elements	
+		temp = sLN->next;
+		sLN->next = NULL;
+		delete temp;
+		return;
+	}
+	
 
-	sLN = removed->next;
-
-	removed = NULL;
+	delete temp;	
+		
 }
 
 // ---------------------- tests removeChars begin ------------
@@ -261,7 +279,51 @@ void removeCharsTest1() {
 
 	sLN0 = sLN1 = sLN2 = sLN5 = sLN6 = sLN7 = NULL;
 
-	removeChars(as1, 3, 2);
+	removeChars(as1, 0, 2);
+    while (as1 != NULL) {
+        cout << "ArrayString " << as1->elem << endl;
+		as1 = as1->next;
+	}
+
+	delete [] as1;
+}
+
+void removeCharsTest2() {
+    stringListNode * sLN0 = new stringListNode; sLN0->elem = 'a';
+	stringListNode * sLN1 = new stringListNode; sLN1->elem = 'b';
+	stringListNode * sLN2 = new stringListNode; sLN2->elem = 'c';
+    stringListNode * sLN5 = new stringListNode; sLN5->elem = 'd';
+	stringListNode * sLN6 = new stringListNode; sLN6->elem = 'e';
+	stringListNode * sLN7 = new stringListNode; sLN7->elem = 'f';
+
+	sLN0->next = sLN1; sLN1->next = sLN2; sLN2->next = sLN5; sLN5->next = sLN6; sLN6->next = sLN7; sLN7->next = NULL;
+	arrayString as1 = sLN0;
+
+	sLN0 = sLN1 = sLN2 = sLN5 = sLN6 = sLN7 = NULL;
+
+	removeChars(as1, 0, 3);
+    while (as1 != NULL) {
+        cout << "ArrayString " << as1->elem << endl;
+		as1 = as1->next;
+	}
+
+	delete [] as1;
+}
+
+void removeCharsTest3() {
+    stringListNode * sLN0 = new stringListNode; sLN0->elem = 'a';
+	stringListNode * sLN1 = new stringListNode; sLN1->elem = 'b';
+	stringListNode * sLN2 = new stringListNode; sLN2->elem = 'c';
+    stringListNode * sLN5 = new stringListNode; sLN5->elem = 'd';
+	stringListNode * sLN6 = new stringListNode; sLN6->elem = 'e';
+	stringListNode * sLN7 = new stringListNode; sLN7->elem = 'f';
+
+	sLN0->next = sLN1; sLN1->next = sLN2; sLN2->next = sLN5; sLN5->next = sLN6; sLN6->next = sLN7; sLN7->next = NULL;
+	arrayString as1 = sLN0;
+
+	sLN0 = sLN1 = sLN2 = sLN5 = sLN6 = sLN7 = NULL;
+
+	removeChars(as1, 5, 1);
     while (as1 != NULL) {
         cout << "ArrayString " << as1->elem << endl;
 		as1 = as1->next;
@@ -274,6 +336,6 @@ void removeCharsTest1() {
 
 
 int main() {
-	removeCharsTest1();
+	removeCharsTest3();
 	return 0;
 }
