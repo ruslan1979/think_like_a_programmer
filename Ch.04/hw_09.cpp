@@ -1,14 +1,14 @@
-/* ЗАДАЧА 9:
-        Представьте, что существует связный список, в узлах которого
-        вместо символов хранятся цифры от 0 до 9 в формате int. Используя
-        подобный связный список, мы можем реализовать положительные числа
-        любого размера. Число 149, например, будет представлено в виде
-        связного списка, в первом узле которого будет храниться цифра 1,
-        во втором – 4, а в третьем и последнем — 9. Напишите функцию
-        intToList, которая принимает в качестве параметра число и создает
-        подобный связный список.
-        Подсказка: возможно, вам покажется легче строить связный
-        список в обратном порядке, например, если число 149, то в первом узле хранится 9.
+/* Р—РђР”РђР§Рђ 9:
+        РџСЂРµРґСЃС‚Р°РІСЊС‚Рµ, С‡С‚Рѕ СЃСѓС‰РµСЃС‚РІСѓРµС‚ СЃРІСЏР·РЅС‹Р№ СЃРїРёСЃРѕРє, РІ СѓР·Р»Р°С… РєРѕС‚РѕСЂРѕРіРѕ
+        РІРјРµСЃС‚Рѕ СЃРёРјРІРѕР»РѕРІ С…СЂР°РЅСЏС‚СЃСЏ С†РёС„СЂС‹ РѕС‚ 0 РґРѕ 9 РІ С„РѕСЂРјР°С‚Рµ int. РСЃРїРѕР»СЊР·СѓСЏ
+        РїРѕРґРѕР±РЅС‹Р№ СЃРІСЏР·РЅС‹Р№ СЃРїРёСЃРѕРє, РјС‹ РјРѕР¶РµРј СЂРµР°Р»РёР·РѕРІР°С‚СЊ РїРѕР»РѕР¶РёС‚РµР»СЊРЅС‹Рµ С‡РёСЃР»Р°
+        Р»СЋР±РѕРіРѕ СЂР°Р·РјРµСЂР°. Р§РёСЃР»Рѕ 149, РЅР°РїСЂРёРјРµСЂ, Р±СѓРґРµС‚ РїСЂРµРґСЃС‚Р°РІР»РµРЅРѕ РІ РІРёРґРµ
+        СЃРІСЏР·РЅРѕРіРѕ СЃРїРёСЃРєР°, РІ РїРµСЂРІРѕРј СѓР·Р»Рµ РєРѕС‚РѕСЂРѕРіРѕ Р±СѓРґРµС‚ С…СЂР°РЅРёС‚СЊСЃСЏ С†РёС„СЂР° 1,
+        РІРѕ РІС‚РѕСЂРѕРј вЂ“ 4, Р° РІ С‚СЂРµС‚СЊРµРј Рё РїРѕСЃР»РµРґРЅРµРј вЂ” 9. РќР°РїРёС€РёС‚Рµ С„СѓРЅРєС†РёСЋ
+        intToList, РєРѕС‚РѕСЂР°СЏ РїСЂРёРЅРёРјР°РµС‚ РІ РєР°С‡РµСЃС‚РІРµ РїР°СЂР°РјРµС‚СЂР° С‡РёСЃР»Рѕ Рё СЃРѕР·РґР°РµС‚
+        РїРѕРґРѕР±РЅС‹Р№ СЃРІСЏР·РЅС‹Р№ СЃРїРёСЃРѕРє.
+        РџРѕРґСЃРєР°Р·РєР°: РІРѕР·РјРѕР¶РЅРѕ, РІР°Рј РїРѕРєР°Р¶РµС‚СЃСЏ Р»РµРіС‡Рµ СЃС‚СЂРѕРёС‚СЊ СЃРІСЏР·РЅС‹Р№
+        СЃРїРёСЃРѕРє РІ РѕР±СЂР°С‚РЅРѕРј РїРѕСЂСЏРґРєРµ, РЅР°РїСЂРёРјРµСЂ, РµСЃР»Рё С‡РёСЃР»Рѕ 149, С‚Рѕ РІ РїРµСЂРІРѕРј СѓР·Р»Рµ С…СЂР°РЅРёС‚СЃСЏ 9.
 */
 
 #include <iostream>
@@ -16,25 +16,46 @@
 using namespace std;
 
 struct intListNode {
-    size_t elem;
+    int elem;
     intListNode * next;
 };
 
-//typedef stringListNode * arrayString;
-intListNode* intToList(size_t digit) {
-    intListNode* result = new intListNode;
-    intListNode* temp = new intListNode;
-    size_t tempInt = digit;
-
-    while (tempInt != -1) {
-        int remainder = digit % 10;
-        result->elem = remainder;
-    }
-
+intListNode* intToList(int digit) {
+	intListNode* result = new intListNode();
+	
+	if (digit == 0){
+		result->elem = digit;		
+		return result;
+	}
+		
+	int tempInt = digit;
+	result->elem = (tempInt % 10);
+	tempInt /= 10;
+	
+	while (tempInt != 0) {
+		intListNode* temp = new intListNode();	
+		temp->elem = (tempInt % 10);
+		temp->next = result;
+		result = temp;
+		
+		tempInt /= 10;				
+	}
+			
+    return result;
 }
 
 void intToListTest1() {
-    size_t digit = 123;
+    int digit = 0;
+
+    intListNode* presentedList = intToList(digit);
+    while (presentedList != nullptr) {
+        cout << presentedList->elem << " ";
+        presentedList = presentedList->next;
+    }
+}
+
+void intToListTest2() {
+    int digit = 1234;
 
     intListNode* presentedList = intToList(digit);
     while (presentedList != nullptr) {
@@ -44,12 +65,6 @@ void intToListTest1() {
 }
 
 int main() {
-    intToListTest1();
+    intToListTest2();
     return 0;
 }
-
-int main() {
-	removeCharsTest1();
-	return 0;
-}
-
