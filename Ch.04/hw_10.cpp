@@ -14,7 +14,7 @@ struct intListNode {
     intListNode * next;
 };
 
-intListNode* intToList(int digit) {
+intListNode* intToList(int digit) {	
 	intListNode* result = new intListNode();
 	
 	if (digit == 0){
@@ -38,20 +38,44 @@ intListNode* intToList(int digit) {
     return result;
 }
 
-void intToListTest1() {
-    int digit = 0;
+int listToInt(intListNode* list) {
+	int result = 0;;
+	
+	while (list != NULL) {	
+		result = result * 10 + list->elem;		
+		list = list->next;
+	}
+	
+	return result;
+}
 
-    intListNode* presentedList = intToList(digit);
+intListNode* sumToList(intListNode* list1, intListNode* list2) {
+	int num1 = listToInt(list1);
+	int num2 = listToInt(list2);
+	
+	int sum = num1 + num2;
+	
+	return intToList(sum);	
+}
+
+void sumToListTest1() {
+    int digit1 = 0, digit2 = 0;
+    intListNode* l1 = intToList(digit1);
+    intListNode* l2 = intToList(digit2);
+
+    intListNode* presentedList = sumToList(l1, l2);
     while (presentedList != nullptr) {
         cout << presentedList->elem << " ";
         presentedList = presentedList->next;
     }
 }
 
-void intToListTest2() {
-    int digit = 1234;
+void sumToListTest2() {
+    int digit1 = 1234, digit2 = 5678;
+    intListNode* l1 = intToList(digit1);
+    intListNode* l2 = intToList(digit2);
 
-    intListNode* presentedList = intToList(digit);
+    intListNode* presentedList = sumToList(l1, l2);
     while (presentedList != nullptr) {
         cout << presentedList->elem << " ";
         presentedList = presentedList->next;
@@ -59,6 +83,6 @@ void intToListTest2() {
 }
 
 int main() {
-    intToListTest2();
+    sumToListTest2();
     return 0;
 }
