@@ -33,10 +33,19 @@ class studentRecord {
         void setStudentID(int newID);
         string name();
         void setName(string newName);
+        string letterGrade();
+        
     private:
         int _grade;
         int _studentID;
         string _name;
+        bool isValidGrade(int grade);
+}
+
+studentRecord::studentRecord() {
+    setGrade(0);
+    setStudentID(-1);
+    setName("");
 }
 
 studentRecord::studentRecord(int newGrade, int newId, string newName) {
@@ -45,12 +54,20 @@ studentRecord::studentRecord(int newGrade, int newId, string newName) {
     setName(newName);
 }
 
+bool studentRecord::isValidGrade()int grade{
+	if ((grade >= 0) && (grade <= 100))
+		return true;
+	
+	return false;
+}
+
 int studentRecord::grade() {
     return _grade;
 }
 
 void studentRecord::setGrade(int newGrade) {
-    if ((newGrade >= 0) && (newGrade <= 100))
+    //if ((newGrade >= 0) && (newGrade <= 100))
+    if (isValidGrade(newGrade))
         _grade = newGrade;
 }
 
@@ -68,4 +85,17 @@ string studentRecord::name() {
 
 void studentRecord::setName(string newName) {
     _name = newName;
+}
+
+string studentRecord::letterGrade(){
+	if (!isValidGrade(_grade))
+		return "!ERROR";
+		
+	const int NUMBER_CATEGORIES = 11;
+	const string GRADE_LETTER[] = {"F", "D", "D+", "C-", "C", "C+", "B-", "B", "B+", "A-", "A"};
+	const int LOWEST_GRADE_SCORE[] = {0, 60, 67,  70, 73, 77, 80, 83, 87, 90, 93};
+	int category = 0;
+	while (category < NUMBER_CATEGORIES && LOWEST_GRADE_SCORE[category] <= _grade)
+		category++;
+	return GRADE_LETTER[CATEGORY - 1];
 }
