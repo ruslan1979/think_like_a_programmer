@@ -54,7 +54,7 @@ studentRecord::studentRecord(int newGrade, int newId, string newName) {
     setName(newName);
 }
 
-bool studentRecord::isValidGrade()int grade{
+bool studentRecord::isValidGrade(int grade){
 	if ((grade >= 0) && (grade <= 100))
 		return true;
 	
@@ -66,7 +66,7 @@ int studentRecord::grade() {
 }
 
 void studentRecord::setGrade(int newGrade) {
-    //if ((newGrade >= 0) && (newGrade <= 100))
+
     if (isValidGrade(newGrade))
         _grade = newGrade;
 }
