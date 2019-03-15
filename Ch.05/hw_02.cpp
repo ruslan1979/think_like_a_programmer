@@ -13,59 +13,89 @@ using namespace std;
 
 class car {
     public:
-        void setManufacturer(string name);        
+        car(string manufacturer, string model, int year);
+        void setManufacturer(string name);
         string manufacturer();
-        void setModel(string name);        
+        void setModel(string name);
         string model();
         void setReleaseYear(int year);
-        int releaseYear();        
+        int releaseYear();
+
+        int carAge();
+        string description();
     private:
-        string manufacturer;
-        string model;
-        int releaseYear;
+        string nameOfManufacturer;
+        string nameOfModel;
+        int year;
+};
+
+car::car(string manufacturer, string model, int year) {
+    setManufacturer(manufacturer);
+    setModel(model);
+    setReleaseYear(year);
 }
 
 void car::setManufacturer(string name) {
-    if (name == NULL) 
+    if (name == "")
         return;
 
     // for simplicity I don't clean the string
     // am just compare with empty string
     if (name.empty())
         return;
-    
-    manufacturer = name;
+
+    nameOfManufacturer = name;
 }
 
 string car::manufacturer(){
-    return manufacturer;
+    return nameOfManufacturer;
 }
 
 void car::setModel(string name) {
-    if (name == NULL) 
+    if (name == "")
         return;
 
     // for simplicity I don't clean the string
     // am just compare with empty string
     if (name.empty())
         return;
-    
-    model = name;
+
+    nameOfModel = name;
 }
 
 string car::model() {
-    return model;
+    return nameOfModel;
 }
 
 void car::setReleaseYear(int year){
     if ((year <= 1900) || (year > 2019))
-        return 0;
-    
-    releaseYear = year;
+        return;
+
+    this->year = year;
 }
 
 int car::releaseYear() {
-    return year;    
+    return year;
 }
 
+string car::description(){
+    return to_string(releaseYear()) +
+        " " + manufacturer() +
+        " " + model();
+}
 
+int car::carAge(){
+    return 2019 - releaseYear();
+};
+
+int main() {
+    car cr("Chevrolet", "Impala", 1957);
+    cout << cr.description() << endl;
+    cout << cr.carAge() << endl;
+
+    car cr1("Ford", "Focus", 2017);
+    cout << cr1.description() << endl;
+    cout << cr1.carAge() << endl;
+
+    return 0;
+}
