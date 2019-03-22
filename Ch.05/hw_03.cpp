@@ -24,7 +24,8 @@ class variableString {
         void concatenate(arrayString &s1, arrayString &s2);
         variableString& operator=(variableString & vs);
     private:
-        arrayString str;        
+        arrayString str; 
+        delete
 };
 
 variableString::variableString(char * inputString){
@@ -76,9 +77,17 @@ variableString::~variableString(){
     delete[] str;
 };
 
+void variableString::clearString(arrayString &inputString){
+    while (inputString != NULL) {
+        arrayString temp = inputString;
+        inputString = listPtr->next;
+        delete temp;
+    }
+}
+
 variableString& operator=(variableString & vs) {
     if (this != &vs) {
-        
+            
     }
 };
 int main() {
